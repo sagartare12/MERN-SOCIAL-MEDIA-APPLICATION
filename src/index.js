@@ -7,7 +7,8 @@ import {BrowserRouter,Routes,Route,RouterProvider} from 'react-router-dom'
 import Home from './pages/Home';
 import store from './store/store'
 import { Provider } from 'react-redux';
-
+import Register from './pages/Register';
+import Login from './pages/Login';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
@@ -15,6 +16,8 @@ root.render(
   <Routes>
     <Route path="/" element={<App />} >
       <Route index element={<Home />} />
+      <Route path="/register" element={<Register />}/>
+      <Route path="/login" element={<Login />}/>
     
     </Route>
   </Routes>
