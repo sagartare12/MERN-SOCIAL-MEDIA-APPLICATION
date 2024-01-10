@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import loginSignupImage from '../assets/login-animation.gif';
+
 import {BiShow , BiHide} from 'react-icons/bi'
 import {Link ,useNavigate} from 'react-router-dom'
 import { isLogInReducer } from '../store/slices/RouterSlice';
@@ -68,11 +68,7 @@ const handleSubmit=async(e)=>{
         navigate("/login")
         }else toast.error(data.message)
       
-      // alert(`${data.status}`=== 'Success' ? 'Your account has been created successfully':`${data.message}`);
-     
-      // {`${data.status}`=== 'Success' ? 'Your account has been created successfully':`${data.message}`}
-      // navigate("/login")
-    
+
 
 
     
@@ -82,16 +78,7 @@ const handleSubmit=async(e)=>{
     <div className="p-3 md:p-4  ">
       <div className="w-full max-w-sm bg-white mx-auto flex-col p-4 ">
         {/* <h1 className='text-center text-2xl font-bold'>Signup</h1> */}
-        <div className="w-20 h-20 overflow-hidden rounded-full drop-shadow-md shadow-md m-auto relative ">
-          <img src={loginSignupImage} alt="" className="w-full h-full" />
-          
-          <label htmlFor="profileImage">
-          <div className="absolute bottom-0 h-1/3 bg-slate-500  bg-opacity-60 w-full text-center cursor-pointer">
-            <p className='text-sm p-1 text-white'>Upload</p>
-          </div>
-          </label>
-          <input type="file" id="profileImage" className='hidden' accept='image/*' />
-        </div>
+      
         <form className="w-full py-3 flex flex-col " onSubmit={handleSubmit}>
           {/* <form className="w-full py-3 flex flex-col"> */}
           <label htmlFor="fullname">Full Name</label>

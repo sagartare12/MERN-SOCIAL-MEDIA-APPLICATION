@@ -13,9 +13,9 @@ function App() {
   const isSignUp = useSelector((state)=>state.routers.allRouters.isSignup)
   console.log(isSignUp)
   return (
-    <div className="App">
+    <div className="App  bg-slate-100 min-h-[calc(100vh)]">
 
-  {user._id ?   <>
+  {!user._id ?   <>
   <Header />
   <main className='pt-16 bg-slate-100 min-h-[calc(100vh)] '>
 
