@@ -9,9 +9,12 @@ import store from './store/store'
 import { Provider } from 'react-redux';
 import Register from './pages/Register';
 import Login from './pages/Login';
+
+import toast, { Toaster } from 'react-hot-toast';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
+    
   <BrowserRouter>
   <Routes>
     <Route path="/" element={<App />} >
@@ -22,6 +25,7 @@ root.render(
     </Route>
   </Routes>
 </BrowserRouter>
+
 </Provider>
 );
 

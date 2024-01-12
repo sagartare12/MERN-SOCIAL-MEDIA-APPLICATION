@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-
+import axios from 'axios';
 import {BiShow , BiHide} from 'react-icons/bi'
 import {Link,useNavigate} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
@@ -10,7 +10,6 @@ import { isSignupReducer } from '../store/slices/RouterSlice';
 
 const Login = () => {
   const navigate  = useNavigate();
-
   const dispatch = useDispatch();
     const [showPassword,setShowPassword]= useState(false);
     
@@ -18,8 +17,6 @@ const Login = () => {
         email:"",
         password:"",
     })
-
-
 
     const handleShowPassword=()=>{
         setShowPassword(prev => !prev)
@@ -39,26 +36,21 @@ const Login = () => {
 
       const {email,password} =userData;
       if( !email || !password) return  alert("Please enter required fields")
-      console.log(process.env.REACT_APP_SERVER_DOMAIN)
-      const fetchdata=await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/user/login`,{
-      method:'POST',
-      headers:{
-        'content-type':'application/json'
-      },
-      credentials: 'include', 
-      body:JSON.stringify(userData)
-    })
 
-    const data= await fetchdata.json();
-    if(data.msg) alert(data.msg)
-      
-     if(data.msg==='Login Success!'){
-        dispatch(loginReducer(data));
-        toast.success(`Thank you for login 🙏`)
+    const data= await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/user/login`, userData, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': 'your-token-value', // Include your actual token value
+      },
+    });
+
+     if(data.data.msg==='Login Success!'){
+        dispatch(loginReducer(data.data));
+        toast.success(data.data.msg)
         setTimeout(()=>{
           navigate('/')
         },1000);
-     }else toast.error(data.message)
+     }else toast.error(data.data.msg)
     }
     const handleSignUp=()=>{
       dispatch(isSignupReducer())
