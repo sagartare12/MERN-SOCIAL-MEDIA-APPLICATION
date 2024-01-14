@@ -19,6 +19,14 @@ import {toast} from 'react-hot-toast'
     setShadowMenu(prev => !prev);
   }
 
+
+  const handleProfile=async()=>{
+
+  setTimeout(()=>{
+    navigate('/profile')
+  },1000);
+  }
+
   const handleLogout=async()=>{
 
     const token=userReducerData.access_token
@@ -97,7 +105,12 @@ if(fetchData.data.msg==='Logged out!'){
             <Link to={"/contact"} className="hover:bg-slate-300 text-black no-underline">Notifications</Link>
           </nav>
                 {!userReducerData.user ? <Link to={"/login"} className="hover:bg-slate-300 whitespace-nowrap cursor-pointer hover:font-medium">Login</Link> :
-                <p className="whitespace-nowrap cursor-pointer hover:bg-slate-300  hover:font-medium" onClick={handleLogout}>Logout</p> }
+                <div className=''>
+                <p className="whitespace-nowrap  mt-1 mb-0 cursor-pointer hover:bg-slate-300  hover:font-medium" onClick={handleProfile}>Logout</p>
+                <p className="whitespace-nowrap  mt-0 mb-1 cursor-pointer hover:bg-slate-300  hover:font-medium" onClick={handleLogout}>Logout</p>
+                </div>
+                }
+
               </div>
             )}
            

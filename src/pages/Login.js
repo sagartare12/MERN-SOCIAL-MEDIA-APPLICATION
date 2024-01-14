@@ -30,6 +30,7 @@ const Login = () => {
                  };
         })
     }
+   
 
     const handleSubmit=async(e)=>{
       e.preventDefault();
@@ -99,7 +100,7 @@ const Login = () => {
        
         <p className="text-sm justify mt-2 ">
           Don't have an account ?{" "}
-          <Link to="/register" onClick={handleSignUp} className="text-red-500  font-bold underline">
+          <Link to="/register" onClick={handleSignUp} className="text-red-500  font-bold no-underline">
             Register Now
           </Link>
         </p>

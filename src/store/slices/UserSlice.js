@@ -12,7 +12,8 @@ const userSlice =createSlice({
         },
         logoutReducer(state,action){
             state.user={}
-        }
+        },
+    
     }
 })
 

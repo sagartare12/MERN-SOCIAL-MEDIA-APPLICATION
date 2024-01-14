@@ -10,11 +10,14 @@ const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPassword,setShowPassword]= useState(false);
+  const [showConfirmPassword,setShowConfirrmPassword]= useState(false);
+  const [selectedGender, setSelectedGender] = useState('');
   const [userData,setUserData]=useState({
    fullname:"",
    usrname:"",
    email:"",
    password:"",
+   confirmPassword:"",
    role:"",
    gender:"",
    avatar:"",
@@ -37,6 +40,9 @@ const Signup = () => {
   const handleShowPassword=()=>{
       setShowPassword(prev => !prev)
   }
+  const handleShowConfirmPassword=()=>{
+    setShowConfirrmPassword(prev => !prev)
+}
 
 
 const handleSignUp=()=>{
@@ -48,8 +54,9 @@ const handleSubmit=async(e)=>{
   e.preventDefault();
 
  
-
-  
+  const {password,confirmPassword} = userData;
+  console.log(password + confirmPassword)
+      if(password !== confirmPassword) return toast.error('Password and confirm password does not match.')
 
       const fetchData =await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/user/register`,{
         method:"POST",
@@ -86,7 +93,7 @@ const handleSubmit=async(e)=>{
             type="text"
             id="fullname"
             name="fullname"
-            className="mt-1 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
+            className="mt-1 mb-2 w-full bg-white px-2 py-1 rounded border focus-within:outline-blue-300"
             value={userData.fullname}
             onChange={handleOnChange}
           />
@@ -96,7 +103,7 @@ const handleSubmit=async(e)=>{
             type="text"
             id="username"
             name="username"
-            className="mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
+            className="mt-1 mb-2 w-full bg-white px-2 py-1 rounded border focus-within:outline-blue-300"
             value={userData.username}
             onChange={handleOnChange}
           />
@@ -106,21 +113,23 @@ const handleSubmit=async(e)=>{
             type="email"
             id="email"
             name="email"
-            className="mt-1 mb-2 w-full bg-slate-200 px-2 py-1 rounded focus-within:outline-blue-300"
+            className="mt-1 mb-2 w-full bg-white px-2 py-1 rounded border focus-within:outline-blue-300"
             value={userData.email}
             onChange={handleOnChange}
           />
 
           <label htmlFor="password">Password</label>
-          <div className="flex px-2 py-1 bg-slate-200  rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300 ">
+          <div className="flex px-2 py-1 bg-white border  rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300 ">
             <input
               type={!showPassword ? "password" : "text"}
               id="password"
               name="password"
-              className=" w-full bg-slate-200 outline-0 border-none "
+              className=" w-full bg-white outline-0 border-none "
               value={userData.password}
             onChange={handleOnChange}
             />
+
+            
             <span
               className="flex text-xl cursor-pointer"
               onClick={handleShowPassword}
@@ -128,8 +137,70 @@ const handleSubmit=async(e)=>{
               {showPassword ? <BiShow /> : <BiHide />}
             </span>
           </div>
+
+
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <div className="flex px-2 py-1 bg-white border  rounded mt-1 mb-2 focus-within:outline focus-within:outline-blue-300 ">
+            <input
+              type={!showConfirmPassword ? "password" : "text"}
+              id="confimPassword"
+              name="confirmPassword"
+              className=" w-full bg-white outline-0 border-none "
+              value={userData.confirmPassword}
+            onChange={handleOnChange}
+            />
+
+            
+            <span
+              className="flex text-xl cursor-pointer"
+              onClick={handleShowConfirmPassword}
+            >
+              {showConfirmPassword ? <BiShow /> : <BiHide />}
+            </span>
+          </div>
+          <div>
+
+          <div className="flex justify-between">     
+      <label>
+        <input
+        className='mr-2'
+          type="radio"
+          name="gender"
+          value="Male"
+          checked={userData.gender === 'Male'}
+          onChange={handleOnChange}
+        />
+        Male
+      </label>
+
+      <label>
+        <input
+        className='mr-2'
+          type="radio"
+          name="gender"
+          value="Female"
+          checked={userData.gender === 'Female'}
+          onChange={handleOnChange}
+        />
+        Female
+      </label>
+
+      <label>
+        <input
+        className='mr-2'
+          type="radio"
+          name="gender"
+          value="Other"
+          checked={userData.gender === 'Other'}
+          onChange={handleOnChange}
+        />
+        Other
+      </label>
+</div>
+      
+    </div>
     
-          <label htmlFor="role">Role</label>
+          {/* <label htmlFor="role">Role</label>
           <input
             type="role"
             id="role"
@@ -204,17 +275,17 @@ const handleSubmit=async(e)=>{
             value={userData.website}
             onChange={handleOnChange}
           />
-       
+        */}
 
-          <button type="submit" className="max-w-[120px]   w-full m-auto bg-red-500 hover:bg-red-600 cursor-pointer text-white  font-medium text-center py-1 rounded-full mt-4">
+          <button type="submit" className="   w-full m-auto bg-slate-600 hover:bg-slate-700 cursor-pointer text-white  font-medium text-center py-1  mt-4">
             Sign Up
           </button>
         </form>
        
         <p className="text-sm justify mt-2 ">
           Already have an account ?{" "}
-          <Link to="/login" onClick={handleSignUp} className="text-red-500  font-bold underline">
-            Login
+          <Link to="/login" onClick={handleSignUp} className="text-red-500  font-bold no-underline">
+            Login Now
           </Link>
         </p>
       
