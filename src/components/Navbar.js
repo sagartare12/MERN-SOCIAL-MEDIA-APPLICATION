@@ -106,7 +106,7 @@ if(fetchData.data.msg==='Logged out!'){
           </nav>
                 {!userReducerData.user ? <Link to={"/login"} className="hover:bg-slate-300 whitespace-nowrap cursor-pointer hover:font-medium">Login</Link> :
                 <div className=''>
-                <p className="whitespace-nowrap  mt-1 mb-0 cursor-pointer hover:bg-slate-300  hover:font-medium" onClick={handleProfile}>Logout</p>
+                <p className="whitespace-nowrap  mt-1 mb-0 cursor-pointer hover:bg-slate-300  hover:font-medium" onClick={handleProfile}>Profile</p>
                 <p className="whitespace-nowrap  mt-0 mb-1 cursor-pointer hover:bg-slate-300  hover:font-medium" onClick={handleLogout}>Logout</p>
                 </div>
                 }
