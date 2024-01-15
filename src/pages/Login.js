@@ -41,7 +41,7 @@ const Login = () => {
     const data= await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/user/login`, userData, {
       headers: {
         'Content-Type': 'application/json',
-        'x-auth-token': 'your-token-value', // Include your actual token value
+       // Include your actual token value
       },
     });
 

@@ -10,7 +10,7 @@ import { FaImage } from "react-icons/fa6";
 import { createPostReducer } from '../../store/slices/PostSlice';
 import { Link,useNavigate } from 'react-router-dom'
 
-const Saved = () => {
+const Saved = ({username}) => {
     const dispatch = useDispatch();
     const navigate  = useNavigate();
     const userReducerData = useSelector((state)=>state.users.user)
@@ -69,8 +69,7 @@ try{
       });
  
 
-    //   console.log(data.data.msg)
-    //   console.log("hi")
+   
   
        if(data.data.msg==='Created Post!'){
           dispatch(createPostReducer(data.data));
@@ -114,7 +113,7 @@ try{
         </div>
         <hr className="border-t-1 -mt-1 mb-1 border-slate-500" />
         <span className="text-sm text-slate-500">
-          Hi Tanya , Whats in your mind !
+        {`Hi ${username} , Whats in your mind !`}
         </span>
         <label htmlFor="content" name="" />
         <div className="ml-auto mr-auto">

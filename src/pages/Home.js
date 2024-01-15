@@ -1,28 +1,56 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector ,useDispatch} from 'react-redux'
-import Posts from '../components/profile/Posts'
+import CreatePosts from '../components/profile/CreatePosts'
+import Post from '../components/profile/Post'
 import Followers from '../components/profile/Followers'
 import Saved from '../components/profile/Saved'
 import Signup from './Register'
 import { IoMdRefresh } from "react-icons/io";
+import {allPostsReducer} from '../store/slices/PostSlice'
+import axios from 'axios';
 const Home = () => {
+  const dispatch= useDispatch()
    const [popUp, setPopUp] = useState(false)
     const isPostPopUp = useSelector((state)=>state.buffer.buff.isPostPopUp)
-   
+    const userReducerData = useSelector((state)=>state.users.user)
+    const postReducerData = useSelector((state)=>state.posts.allPosts.data.posts)
 
+    console.log(userReducerData)
+console.log(postReducerData)
+    useEffect(() => {
+       (async()=>{
+      // const fetchPosts= await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/posts/`);
+      // const fetchRes=await fetchPosts.json();
+      const token=userReducerData.access_token
+      // console.log(userReducerData)
+      const fetchPosts= await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/posts/`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token':  token // Include your actual token value
+        },
+      });
 
-    // useEffect(() => {
-    //   // This effect runs when someVariable changes
-    //   console.log("kooo")
      
-    // }, [isPostPopUp]);
+      dispatch(allPostsReducer(fetchPosts))
+    })() 
+     
+    }, []);
   return (
     <div>
       <div className='flex justify-center'>
-        <div className='bg-white w-[700px]'>
-          <Posts />
-      
-       
+        <div className='bg-white w-[700px] mt-2'>
+          <CreatePosts username={userReducerData.user.username} userImage={userReducerData.user.avatar}/>
+          {/* <Post /> */}
+          {
+postReducerData[0] && postReducerData.map((post)=> {
+  return (
+     <Post postData={post} />
+     )
+  })
+
+
+          }
+          
         </div>
         <div className='bg-white w-[400px] mt-2 ml-2'>
           <div className="p-2">
@@ -57,7 +85,7 @@ const Home = () => {
 
           <div className={` ${isPostPopUp ? 'visible' : 'collapse' }`} >
             <div  className=" fixed z-10 left-[400px] top-[200px]">
-                <Saved />
+                <Saved username={userReducerData.user.username}/>
             </div>
         
           </div>
