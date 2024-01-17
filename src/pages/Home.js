@@ -7,42 +7,92 @@ import Saved from '../components/profile/Saved'
 import Signup from './Register'
 import { IoMdRefresh } from "react-icons/io";
 import {allPostsReducer} from '../store/slices/PostSlice'
+import {followerReducer,followingReducer} from '../store/slices/UserSlice'
 import axios from 'axios';
 const Home = () => {
   const dispatch= useDispatch()
-   const [popUp, setPopUp] = useState(false)
+   
+   const [postData, setPostData] = useState([]);
+
+   const [followers, setFollowers] = useState([]);
+   const [following, setFollowing] = useState([]);
     const isPostPopUp = useSelector((state)=>state.buffer.buff.isPostPopUp)
     const userReducerData = useSelector((state)=>state.users.user)
-    const postReducerData = useSelector((state)=>state.posts.allPosts.data.posts)
+  
+    const token=userReducerData.access_token
+  const yu=async()=>{
+    const fetchUserss= await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/user/uv/suggestion_user`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token':  token // Include your actual token value
+      },
+    });
+   
+   }
+ yu()
 
-    console.log(userReducerData)
-console.log(postReducerData)
-    useEffect(() => {
-       (async()=>{
-      // const fetchPosts= await fetch(`${process.env.REACT_APP_SERVER_DOMAIN}/posts/`);
-      // const fetchRes=await fetchPosts.json();
-      const token=userReducerData.access_token
-      // console.log(userReducerData)
-      const fetchPosts= await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/posts/`, {
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Make a GET request using Axios
+     
+      const fetchPosts= await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/posts`, {
         headers: {
           'Content-Type': 'application/json',
           'x-auth-token':  token // Include your actual token value
         },
       });
 
+      // Update the state with the received data
+      setPostData(fetchPosts.data.posts);
+      
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // Call the fetchData function when the component mounts
+  fetchData();
+}, []);
+
+
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Make a GET request using Axios
      
-      dispatch(allPostsReducer(fetchPosts))
-    })() 
+      const fetchUsers= await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/user/uv/suggestion_user`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token':  token // Include your actual token value
+        },
+      });
+
+      // Update the state with the received data
+      setFollowers(fetchUsers.data.followers);
+      setFollowing(fetchUsers.data.following);
      
-    }, []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // Call the fetchData function when the component mounts
+  fetchData();
+}, []);
+   
+  
+
+ 
   return (
     <div>
       <div className='flex justify-center'>
         <div className='bg-white w-[700px] mt-2'>
           <CreatePosts username={userReducerData.user.username} userImage={userReducerData.user.avatar}/>
-          {/* <Post /> */}
+          
           {
-postReducerData[0] && postReducerData.map((post)=> {
+postData[0] && postData.map((post)=> {
   return (
      <Post postData={post} />
      )
@@ -56,12 +106,12 @@ postReducerData[0] && postReducerData.map((post)=> {
           <div className="p-2">
                 <div className="flex items-center">
                 <div className="text-3xl cursor-pointer" >
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/50/User_icon-cp.svg" alt="" className="md:w-[50px] md:h-12 h-7 w-7 rounded-full overflow-hidden"/> 
+                    <img src={userReducerData.user.avatar} alt="" className="md:w-[50px] md:h-12 h-7 w-7 rounded-full overflow-hidden"/> 
                 </div>
                 <div className='flex items-center justify-between w-full'>
                 <div className="">
-                <p className='m-0 text-[11px] font-semibold'>Username</p>
-                <p className='m-0 text-[11px] font-semibold'>Full name</p>
+                <p className='m-0 text-[11px] font-semibold'>{userReducerData.user.username}</p>
+                <p className='m-0 text-[11px] font-semibold'>{userReducerData.user.fullname}</p>
                 </div>
                
                 </div>
@@ -72,12 +122,22 @@ postReducerData[0] && postReducerData.map((post)=> {
             <IoMdRefresh />
           </div>
         </div>
-        <Followers />
-        <Followers />
-        <Followers />
-        <Followers />
-        <Followers />
-        <Followers />
+         {
+          followers[0] && followers.map((user)=>{
+            return (
+              <Followers username={user.username} fullname={user.fullname} avatar={user.avatar} status="Follow"/>
+            )
+          })
+        } 
+      
+        {
+          following[0] && following.map((user)=>{
+            return (
+              <Followers username={user.username} fullname={user.fullname} avatar={user.avatar} status="Unfollow"/>
+            )
+          })
+        } 
+    
         </div>
         </div>
       </div>

@@ -14,7 +14,7 @@ const postSlice =createSlice({
         },
         allPostsReducer(state,action){
             state.allPosts=action.payload
-            console.log(action.payload)
+            console.log( action.payload)
         }
      
     }
