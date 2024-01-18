@@ -6,6 +6,7 @@ const userSlice =createSlice({
         user:{} ,
         follower:[],
         following:[],
+        followUnfollow:{}
      },
     reducers:{
     
@@ -21,10 +22,14 @@ const userSlice =createSlice({
         followingReducer(state,action){
             state.following=action.payload
         },
+        followUnfollowReducer(state,action){
+            state.followUnfollow=action.payload
+        }
+
     
     }
 })
 
 export default  userSlice.reducer;
 
-export const {addUser,loginReducer,logoutReducer,followerReducer,followingReducer} = userSlice.actions;
+export const {addUser,loginReducer,logoutReducer,followerReducer,followingReducer,followUnfollowReducer} = userSlice.actions;

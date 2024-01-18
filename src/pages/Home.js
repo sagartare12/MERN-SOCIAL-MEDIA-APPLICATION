@@ -20,16 +20,7 @@ const Home = () => {
     const userReducerData = useSelector((state)=>state.users.user)
   
     const token=userReducerData.access_token
-  const yu=async()=>{
-    const fetchUserss= await axios.get(`${process.env.REACT_APP_SERVER_DOMAIN}/user/uv/suggestion_user`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token':  token // Include your actual token value
-      },
-    });
-   
-   }
- yu()
+
 
 
 useEffect(() => {
@@ -125,7 +116,7 @@ postData[0] && postData.map((post)=> {
          {
           followers[0] && followers.map((user)=>{
             return (
-              <Followers username={user.username} fullname={user.fullname} avatar={user.avatar} status="Follow"/>
+              <Followers token={token} username={user.username} fullname={user.fullname} avatar={user.avatar} id={user._id}  status="Follow"/>
             )
           })
         } 
@@ -133,7 +124,7 @@ postData[0] && postData.map((post)=> {
         {
           following[0] && following.map((user)=>{
             return (
-              <Followers username={user.username} fullname={user.fullname} avatar={user.avatar} status="Unfollow"/>
+              <Followers token={token} username={user.username} fullname={user.fullname} avatar={user.avatar} id={user._id} status="Unfollow"/>
             )
           })
         } 
