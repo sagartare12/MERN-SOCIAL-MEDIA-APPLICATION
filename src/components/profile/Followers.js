@@ -7,7 +7,7 @@ const Followers = ({username,fullname,avatar,status,id,token}) => {
   const dispatch= useDispatch()
   const userStatus =status === "Follow" ? "follow":"unfollow";
   console.log(token)
-  const userReducerData = useSelector((state)=>state.users.followUnfollow)
+  const userReducerData = useSelector((state)=>state.users.followUnfollow.data.updatedUser)
   console.log(userReducerData)
   const handleFollowUnfollow=async()=>{
     try{
@@ -19,7 +19,7 @@ const Followers = ({username,fullname,avatar,status,id,token}) => {
     });
     
 dispatch(followUnfollowReducer(fetchData))
-
+console.log(fetchData)
   }catch (error) {
     console.error('Error fetching data:', error);
   }

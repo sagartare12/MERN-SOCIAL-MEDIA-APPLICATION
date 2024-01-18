@@ -18,9 +18,10 @@ const Home = () => {
    const [following, setFollowing] = useState([]);
     const isPostPopUp = useSelector((state)=>state.buffer.buff.isPostPopUp)
     const userReducerData = useSelector((state)=>state.users.user)
-  
+    const followUnfoReducer = useSelector((state)=>state.users.followUnfollow.data.updatedUser)
     const token=userReducerData.access_token
-
+    const nFollwer=followUnfoReducer.followers.length
+    const nFollwing=followUnfoReducer.following.length
 
 
 useEffect(() => {
@@ -71,7 +72,7 @@ useEffect(() => {
 
   // Call the fetchData function when the component mounts
   fetchData();
-}, []);
+}, [nFollwer,nFollwing]);
    
   
 
