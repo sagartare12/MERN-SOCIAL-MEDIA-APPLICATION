@@ -13,7 +13,8 @@ const EditProfile = () => {
   const dispatch= useDispatch()
 
 
-  const [userPost,setUserPost]=useState()
+  const [userPost,setUserPost]=useState(null)
+  console.log(userPost)
   // const followUnfoReducer = useSelector((state)=>state.users.followUnfollow.data.updatedUser )
 
   const followUnfoReducer = useSelector((state)=>state.users.user.user)
@@ -332,13 +333,13 @@ console.log(userPost)
             <button
               id="postBtn" 
               onClick={handlePost}
-              className="text-black focus:outline-none hover:bg-blue-600 px-4 py-2 rounded transition"
+              className="text-white focus:outline-none bg-blue-400 hover:bg-blue-600 px-3 py-1 rounded transition"
             >
               Post
             </button>
             <button
               id="saveBtn"
-              className="text-black focus:outline-none hover:bg-blue-600 px-4 py-2 rounded transition"
+              className="text-white focus:outline-none bg-blue-400 hover:bg-blue-600 px-3 py-1 rounded transition"
             >
               Save
             </button>
@@ -346,17 +347,21 @@ console.log(userPost)
         </div>
       </nav>
 
-      {/* {userPost.data.posts[0] && userPost.data.posts.map((post)=>{
-        return (
-          <div>
+    
+       
+          <div className="flex">
           <img
             className="w-40 h-40 object-cover ml-2 mt-2"
-            src={post.images}
+            src="https://images.all-free-download.com/images/graphiclarge/beauty_of_nature_17_211513.jpg"
+            alt="post image"
+          ></img>
+             <img
+            className="w-40 h-40 object-cover ml-2 mt-2"
+            src="https://cdn.pixabay.com/photo/2013/07/18/20/27/sky-165094_1280.jpg"
             alt="post image"
           ></img>
         </div>
-        )
-      })} */}
+      
      
     </div>
   );
