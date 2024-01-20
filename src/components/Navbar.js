@@ -14,6 +14,7 @@ import {toast} from 'react-hot-toast'
   const dispatch = useDispatch();
   const navigate  = useNavigate();
   const userReducerData = useSelector((state)=>state.users.user)
+  console.log(userReducerData)
   const [shadowMenu,setShadowMenu] = useState(false);
   const handleShowMenu=()=>{
     setShadowMenu(prev => !prev);

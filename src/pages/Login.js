@@ -4,7 +4,7 @@ import {BiShow , BiHide} from 'react-icons/bi'
 import {Link,useNavigate} from 'react-router-dom'
 import {toast} from 'react-hot-toast'
 import { useDispatch,useSelector } from 'react-redux';
-import { loginReducer } from '../store/slices/UserSlice';
+import { loginReducer,usersData } from '../store/slices/UserSlice';
 import { isSignupReducer } from '../store/slices/RouterSlice';
 
 
@@ -37,21 +37,27 @@ const Login = () => {
 
       const {email,password} =userData;
       if( !email || !password) return  alert("Please enter required fields")
+try{
+  const data= await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/user/login`, userData, {
+    headers: {
+      'Content-Type': 'application/json',
+     // Include your actual token value
+    },
+  });
 
-    const data= await axios.post(`${process.env.REACT_APP_SERVER_DOMAIN}/user/login`, userData, {
-      headers: {
-        'Content-Type': 'application/json',
-       // Include your actual token value
-      },
-    });
+   if(data.data.msg==='Login Success!'){
+      dispatch(loginReducer(data.data));
 
-     if(data.data.msg==='Login Success!'){
-        dispatch(loginReducer(data.data));
-        toast.success(data.data.msg)
-        setTimeout(()=>{
-          navigate('/')
-        },1000);
-     }else toast.error(data.data.msg)
+      dispatch(usersData(data.data.user));
+      toast.success(data.data.msg)
+      setTimeout(()=>{
+        navigate('/')
+      },1000);
+   }else toast.error(data.data.msg)
+}catch(err){
+  console.log(err.response)
+}
+  
     }
     const handleSignUp=()=>{
       dispatch(isSignupReducer())

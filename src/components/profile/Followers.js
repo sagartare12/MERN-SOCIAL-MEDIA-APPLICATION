@@ -1,13 +1,14 @@
 import React from 'react'
 import axios from 'axios';
 import { useSelector ,useDispatch} from 'react-redux'
-import {followUnfollowReducer} from '../../store/slices/UserSlice'
+import {followUnfollowReducer,usersData} from '../../store/slices/UserSlice'
 const Followers = ({username,fullname,avatar,status,id,token}) => {
   console.log(username)
   const dispatch= useDispatch()
   const userStatus =status === "Follow" ? "follow":"unfollow";
   console.log(token)
-  const userReducerData = useSelector((state)=>state.users.followUnfollow.data.updatedUser)
+  const userReducerData = useSelector((state)=>state.users.followUnfollow.data.updatedUser )
+  dispatch(usersData(userReducerData));
   console.log(userReducerData)
   const handleFollowUnfollow=async()=>{
     try{
@@ -19,6 +20,8 @@ const Followers = ({username,fullname,avatar,status,id,token}) => {
     });
     
 dispatch(followUnfollowReducer(fetchData))
+// dispatch(usersData(fetchData));
+console.log(fetchData)
 console.log(fetchData)
   }catch (error) {
     console.error('Error fetching data:', error);

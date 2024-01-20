@@ -6,7 +6,15 @@ const userSlice =createSlice({
         user:{} ,
         follower:[],
         following:[],
-        followUnfollow:{}
+        followUnfollow:{
+            data:{
+                updatedUser:{
+                    followers:0,
+                    following:0
+                }
+            }
+        },
+        userData:{}
      },
     reducers:{
     
@@ -24,7 +32,18 @@ const userSlice =createSlice({
         },
         followUnfollowReducer(state,action){
             state.followUnfollow=action.payload
+            
+        },
+
+        usersData(state,action){
+            state.userData=action.payload
+        },
+        updateUserReducer(state,action){
+            state.user.user=action.payload
+           
+            
         }
+
 
     
     }
@@ -32,4 +51,4 @@ const userSlice =createSlice({
 
 export default  userSlice.reducer;
 
-export const {addUser,loginReducer,logoutReducer,followerReducer,followingReducer,followUnfollowReducer} = userSlice.actions;
+export const {addUser,loginReducer,logoutReducer,followerReducer,followingReducer,updateUserReducer,followUnfollowReducer,usersData} = userSlice.actions;

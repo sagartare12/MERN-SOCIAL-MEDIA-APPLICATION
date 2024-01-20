@@ -6,6 +6,7 @@ import { PiPaperPlaneRightFill } from "react-icons/pi";
 import { FaRegBookmark } from "react-icons/fa";
 
 const Post = ({postData}) => {
+  console.log(postData)
   return (
     <div>
         <div className="flex items-center">
@@ -15,7 +16,7 @@ const Post = ({postData}) => {
             </div>
             <div className="flex items-center justify-between w-full">
               <div className="text-left">
-                <p className="text-gray-700 my-0 text-sm font-semibold">{postData.user.username}</p>
+                <p className="text-gray-700 my-0 text-sm font-semibold">{postData.user[0].username}</p>
                 <p className="text-gray-700 mt-0 text-xs">a few seconds ago</p>
               </div>
 
