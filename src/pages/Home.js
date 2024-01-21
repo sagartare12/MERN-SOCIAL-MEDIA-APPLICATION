@@ -89,7 +89,7 @@ useEffect(() => {
           {
 postData[0] && postData.map((post)=> {
   return (
-     <Post key={post._id} postData={post} />
+     <Post key={post._id} postData={post} token={token} id={userReducerData.user._id} />
      )
   })
 

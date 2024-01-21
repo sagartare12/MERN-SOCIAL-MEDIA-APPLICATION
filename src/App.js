@@ -1,7 +1,6 @@
 import {BrowserRouter,Routes,Route, Outlet} from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 import Header from './components/Navbar'
 import { useSelector ,useDispatch} from 'react-redux'
 import Login from './pages/Login';

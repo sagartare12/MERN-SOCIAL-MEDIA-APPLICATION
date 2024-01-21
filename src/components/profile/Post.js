@@ -2,17 +2,33 @@ import React from 'react'
 import { BsThreeDots } from "react-icons/bs";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegComment } from "react-icons/fa";
+import { useSelector ,useDispatch} from 'react-redux'
 import { PiPaperPlaneRightFill } from "react-icons/pi";
 import { FaRegBookmark } from "react-icons/fa";
-
-const Post = ({postData}) => {
+import axios from 'axios';
+const Post = ({postData ,token,id}) => {
   console.log(postData)
+  const user = useSelector((state)=>state.users.user)
+  const handlePost=async()=>{
+    try{
+      const fetchData= await axios.patch(`${process.env.REACT_APP_SERVER_DOMAIN}/posts/${id}/like`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token':  token // Include your actual token value
+        },
+      })
+
+      console.log(fetchData)
+    }catch(err){
+      console.log(err.response)
+    }
+  }
   return (
     <div>
         <div className="flex items-center">
             <div className="w-11 h-10 ml-1 mb-2 mr-1 rounded-full overflow-hidden">
            
-              <img src={postData.user.avatar} alt="UR" className="w-full h-full object-cover"/>
+              <img src={postData.user.avatar} alt="UR" className="w-full h-full object-cover" />
             </div>
             <div className="flex items-center justify-between w-full">
               <div className="text-left">
@@ -38,7 +54,7 @@ const Post = ({postData}) => {
           </div>
 
           <div className="flex items-center gap-1 md:gap-1 ">
-            <div className="mt-2 ml-2 mb-2">
+            <div className="mt-2 ml-2 mb-2" onClick={handlePost}>
               <FaRegHeart />
             </div>
             <div className="mt-2 ml-2 mb-2">
